@@ -1,0 +1,22 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}Афиша{% endblock %}
+{% block heading %}Ближайшие сеансы{% endblock %}
+
+{% block content %}
+    {% for session in sessions %}
+        <div class="card">
+            <h3>{{ session.movie.title }}</h3>
+            <p class="meta">
+                {{ session.date }} в {{ session.time|time:"H:i" }}
+                | Зал №{{ session.hall.number }}
+                | Цена: {{ session.price }} ₽
+            </p>
+            <a href="{% url 'movies:movie_detail' session.movie.pk %}">
+                Подробнее о фильме →
+            </a>
+        </div>
+    {% empty %}
+        <p>Сеансов пока нет.</p>
+    {% endfor %}
+{% endblock %}

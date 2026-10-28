@@ -1,0 +1,29 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}Фильмы{% endblock %}
+{% block heading %}Фильмы{% endblock %}
+
+{% block content %}
+    <form method="get">
+        <input type="text" name="genre" placeholder="Жанр"
+               value="{{ genre|default_if_none:'' }}">
+        <button type="submit">Искать</button>
+    </form>
+
+    {% for movie in movies %}
+        <div class="card">
+            <h3>
+                <a href="{% url 'movies:movie_detail' movie.pk %}">
+                    {{ movie.title }}
+                </a>
+            </h3>
+            <p class="meta">
+                {{ movie.genre }} | {{ movie.duration }} мин
+                {% if movie.rating %} | Рейтинг: {{ movie.rating }}{% endif %}
+            </p>
+            <p>{{ movie.description|truncatewords:20 }}</p>
+        </div>
+    {% empty %}
+        <p>Фильмов не найдено.</p>
+    {% endfor %}
+{% endblock %}

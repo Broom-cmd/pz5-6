@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Кинотеатр{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        nav a { margin-right: 15px; text-decoration: none; color: #0366d6; }
+        nav a:hover { text-decoration: underline; }
+        .card { border: 1px solid #ddd; padding: 12px; margin: 10px 0; border-radius: 6px; }
+        .card h3 { margin-top: 0; }
+        .meta { color: #666; font-size: 0.9em; }
+        form p { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'core:home' %}">Главная</a>
+        <a href="{% url 'movies:movie_list' %}">Фильмы</a>
+        <a href="{% url 'movies:session_list' %}">Сеансы</a>
+        <a href="/admin/">Админка</a>
+    </nav>
+    <hr>
+    <h1>{% block heading %}{% endblock %}</h1>
+
+    {% block content %}{% endblock %}
+</body>
+</html>

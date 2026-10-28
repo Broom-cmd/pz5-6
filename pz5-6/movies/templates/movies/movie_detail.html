@@ -1,0 +1,25 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}{{ movie.title }}{% endblock %}
+{% block heading %}{{ movie.title }}{% endblock %}
+
+{% block content %}
+    <p><b>Жанр:</b> {{ movie.genre }}</p>
+    <p><b>Длительность:</b> {{ movie.duration }} мин</p>
+    {% if movie.rating %}<p><b>Рейтинг:</b> {{ movie.rating }}</p>{% endif %}
+    <p>{{ movie.description }}</p>
+
+    <h2>Сеансы</h2>
+    {% for session in sessions %}
+        <div class="card">
+            {{ session.date }} в {{ session.time|time:"H:i" }}
+            | Зал №{{ session.hall.number }} ({{ session.hall.hall_type }})
+            | {{ session.price }} ₽
+            <a href="{% url 'movies:ticket_create' %}?session={{ session.pk }}">
+                Купить билет
+            </a>
+        </div>
+    {% empty %}
+        <p>Сеансов нет.</p>
+    {% endfor %}
+{% endblock %}

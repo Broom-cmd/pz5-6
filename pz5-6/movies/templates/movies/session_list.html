@@ -1,0 +1,26 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}Сеансы{% endblock %}
+{% block heading %}
+    {% if date %}Сеансы на {{ date }}{% else %}Ближайшие сеансы{% endif %}
+{% endblock %}
+
+{% block content %}
+    <form method="get">
+        <input type="date" name="date" value="{{ date|default_if_none:'' }}">
+        <button type="submit">Показать</button>
+    </form>
+
+    {% for session in sessions %}
+        <div class="card">
+            <a href="{% url 'movies:movie_detail' session.movie.pk %}">
+                {{ session.movie.title }}
+            </a>
+            — {{ session.date }} в {{ session.time|time:"H:i" }}
+            | Зал №{{ session.hall.number }}
+            | {{ session.price }} ₽
+        </div>
+    {% empty %}
+        <p>Нет сеансов.</p>
+    {% endfor %}
+{% endblock %}

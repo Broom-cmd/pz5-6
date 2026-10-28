@@ -1,0 +1,29 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}Покупка билета{% endblock %}
+{% block heading %}Покупка билета{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            <label>Сеанс:</label><br>
+            <select name="session" required>
+                {% for session in sessions %}
+                    <option value="{{ session.pk }}">
+                        {{ session.movie.title }} — {{ session.date }} {{ session.time|time:"H:i" }}
+                    </option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label>Ряд:</label><br>
+            <input type="number" name="seat_row" min="1" required>
+        </p>
+        <p>
+            <label>Место:</label><br>
+            <input type="number" name="seat" min="1" required>
+        </p>
+        <button type="submit">Купить</button>
+    </form>
+{% endblock %}
